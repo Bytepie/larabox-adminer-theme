@@ -1,0 +1,1322 @@
+/*
+ * Larabox Database Manager (Adminer Hybrid Slate Theme)
+ * Built on Adminer's native design tokens (--bg, --fg, --dim, --lit)
+ * Inspired by cPanel Jupiter & James Price architecture:
+ * High contrast, visible borders, card panels, no stray white boxes.
+ */
+
+:root {
+	/* Slate Dark / "Mediocre Dark" Palette */
+	--larabox-page: #191b22;
+	/* body background */
+	--larabox-surface: #232631;
+	/* card / component background */
+	--larabox-fg: #f8fafc;
+	/* primary text */
+	--larabox-muted: #94a3b8;
+	/* secondary/muted text */
+	--larabox-border: #383d4f;
+	/* high-contrast borders */
+	--larabox-border-light: #2d3140;
+	/* subtle card borders */
+	--larabox-cap: #1c1e27;
+	/* card header / alternating row */
+	--larabox-row-hover: #2f3444;
+	/* row hover */
+	--larabox-row-checked: #1e3a6a;
+	/* row selection highlight */
+	--larabox-link: #60a5fa;
+	/* links */
+	--larabox-link-hover: #93c5fd;
+	--larabox-accent: #3b82f6;
+	/* primary blue */
+	--larabox-accent-hover: #2563eb;
+	--larabox-danger: #ef4444;
+	--larabox-alert-error: #ef4444;
+	--larabox-alert-error-bg: rgba(239, 68, 68, 0.15);
+	--larabox-alert-success: #10b981;
+	--larabox-alert-success-bg: rgba(16, 185, 129, 0.15);
+	--larabox-radius: 6px;
+	--larabox-radius-lg: 10px;
+	--larabox-focus: 0 0 0 2px rgba(59, 130, 246, 0.3);
+	--larabox-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+	--larabox-strip: calc(2em + 10px);
+	--larabox-surface-secondary: #111622;
+
+	/* Native Adminer 5/6 design hooks - CRITICAL to eliminate default white boxes */
+	--bg: var(--larabox-surface);
+	--fg: var(--larabox-fg);
+	--dim: var(--larabox-cap);
+	--lit: var(--larabox-border-light);
+
+	--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	--font-mono: ui-monospace, "Cascadia Code", "Fira Code", "Fira Mono", Menlo, Consolas, monospace;
+}
+
+/* ─── Global Reset & Typography ────────────────────────────────────────── */
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	background-color: var(--larabox-page) !important;
+	color: var(--larabox-fg);
+	font-family: var(--font-sans);
+	font-size: 13px;
+	line-height: 1.45;
+	margin: 0;
+	padding: 0;
+	overflow-x: hidden !important;
+}
+
+a,
+a:visited,
+button.link {
+	color: var(--larabox-link);
+	text-decoration: none;
+	font-style: normal !important;
+	transition: color 0.12s ease;
+}
+
+a:link:hover,
+a:visited:hover,
+button.link:hover {
+	color: var(--larabox-link-hover);
+	text-decoration: underline;
+}
+
+/* ─── Top Chrome & Breadcrumb Bar ─────────────────────────────────────── */
+#breadcrumb {
+	background: var(--larabox-cap) !important;
+	color: var(--larabox-muted);
+	height: var(--larabox-strip);
+	line-height: var(--larabox-strip);
+	margin: 0;
+	padding: 0 16px;
+	border-bottom: 1px solid var(--larabox-border);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 100;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+#breadcrumb a {
+	display: inline-flex;
+	align-items: center;
+	padding: 2px 8px;
+	background: var(--larabox-surface);
+	border: 1px solid var(--larabox-border-light);
+	border-radius: var(--larabox-radius);
+	color: var(--larabox-fg);
+	font-weight: 500;
+	font-style: normal !important;
+	line-height: 1.6;
+}
+
+#breadcrumb a:hover {
+	background: var(--larabox-row-hover);
+	border-color: var(--larabox-accent);
+	text-decoration: none;
+}
+
+/* Language selector aligned directly above sidebar card */
+#lang {
+	position: fixed !important;
+	top: 6px !important;
+	left: 14px !important;
+	width: 250px !important;
+	height: 32px !important;
+	display: flex !important;
+	align-items: center !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	color: var(--larabox-muted) !important;
+	font-size: 11px !important;
+	z-index: 103 !important;
+	box-sizing: border-box !important;
+}
+
+#lang label {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	width: 100% !important;
+	gap: 8px !important;
+	color: var(--larabox-muted) !important;
+	font-size: 11.5px !important;
+	font-weight: 600 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+#lang select {
+	flex: 1 !important;
+	width: auto !important;
+	height: 28px !important;
+	background: var(--larabox-surface) !important;
+	color: var(--larabox-fg) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	padding: 2px 8px !important;
+	font-size: 11.5px !important;
+	font-weight: 500 !important;
+	cursor: pointer !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease !important;
+	box-sizing: border-box !important;
+}
+
+#lang select:hover {
+	border-color: var(--larabox-accent) !important;
+}
+
+#lang select:focus {
+	border-color: var(--larabox-accent) !important;
+	box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+}
+
+/* User badge & Logout button in the top right header */
+#logout,
+p#logout,
+.logout {
+	position: fixed !important;
+	top: 0 !important;
+	right: 16px !important;
+	height: var(--larabox-strip) !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 8px !important;
+	z-index: 103 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	background: transparent !important;
+	box-shadow: none !important;
+	border: none !important;
+	color: var(--larabox-muted) !important;
+	font-size: 11.5px !important;
+	font-weight: 500 !important;
+	white-space: nowrap !important;
+}
+
+#logout strong,
+p#logout strong,
+.logout strong {
+	color: var(--larabox-fg) !important;
+	font-weight: 600 !important;
+}
+
+#logout input[type="submit"],
+.logout input[type="submit"],
+input#logout[type="submit"] {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 2px 10px !important;
+	height: 24px !important;
+	background: var(--larabox-surface) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	color: var(--larabox-fg) !important;
+	font-weight: 600 !important;
+	font-size: 11px !important;
+	text-decoration: none !important;
+	cursor: pointer !important;
+	box-shadow: none !important;
+	transform: none !important;
+	transition: all 0.12s ease !important;
+}
+
+#logout input[type="submit"]:hover,
+.logout input[type="submit"]:hover,
+input#logout[type="submit"]:hover {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	transform: none !important;
+}
+
+/* ─── Floating Card Containers (cPanel / Price Architecture) ──────────── */
+#menu,
+#content {
+	background: var(--larabox-surface) !important;
+	border: 1px solid var(--larabox-border);
+	border-radius: var(--larabox-radius-lg);
+	box-shadow: var(--larabox-shadow);
+}
+
+#menu {
+	position: absolute;
+	top: 48px;
+	left: 14px;
+	width: 250px;
+	height: calc(100vh - 72px);
+	margin: 0;
+	padding: 0;
+	display: flex !important;
+	flex-direction: column !important;
+	z-index: 20;
+	overflow: hidden;
+}
+
+#content {
+	margin: 48px 14px 24px 278px;
+	padding: 20px 24px 40px;
+	min-height: calc(100vh - 72px);
+	max-width: calc(100vw - 292px) !important;
+	box-sizing: border-box !important;
+	overflow-x: hidden !important;
+}
+
+/* ─── Larabox DB Brand Header - Upright, NO ITALICS ───────────────────── */
+#menu h1,
+h1 {
+	order: 1 !important;
+	margin: 0;
+	padding: 12px 16px;
+	background: var(--larabox-cap);
+	border-bottom: 1px solid var(--larabox-border);
+	font-size: 15px;
+	font-weight: 700;
+	font-style: normal !important;
+	line-height: 1.3;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	text-align: center !important;
+	gap: 8px !important;
+}
+
+#h1,
+#h1 a,
+.larabox-brand,
+#menu h1 a {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 7px !important;
+	color: #ffffff !important;
+	text-decoration: none !important;
+	font-style: normal !important;
+	font-weight: 700 !important;
+	text-align: center !important;
+}
+
+.brand-larabox {
+	font-weight: 400 !important;
+	font-style: normal !important;
+	font-size: 20px !important;
+	color: #ffffff !important;
+	letter-spacing: 0.02em;
+}
+
+.brand-db {
+	font-size: 10px !important;
+	font-weight: 800 !important;
+	font-style: normal !important;
+	text-transform: uppercase !important;
+	padding: 2px 6px !important;
+	border-radius: 4px !important;
+	background: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	letter-spacing: 0.05em;
+	line-height: 1.2;
+}
+
+/* ─── Sidebar Content & Overrides (No White Boxes) ────────────────────── */
+#menu p,
+#logins {
+	order: 2 !important;
+	padding: 8px 12px;
+	margin: 0;
+	border-bottom: 1px solid var(--larabox-border-light);
+	background: transparent !important;
+	color: var(--larabox-fg) !important;
+}
+
+#menu p a,
+#logins a {
+	background: transparent !important;
+	color: var(--larabox-fg) !important;
+	border: none !important;
+	font-style: normal !important;
+}
+
+#menu form p {
+	order: 3 !important;
+	display: flex;
+	gap: 6px;
+	align-items: center;
+}
+
+#dbs select,
+#menu select {
+	width: 100%;
+	background: var(--larabox-cap) !important;
+	color: var(--larabox-fg) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius);
+	padding: 5px 8px;
+	font-size: 12px;
+}
+
+/* Fast Action Tabs - Clean 2-column stacked grid */
+p.tabs,
+#menu .links {
+	order: 4 !important;
+	display: grid !important;
+	grid-template-columns: 1fr 1fr !important;
+	gap: 6px !important;
+	padding: 8px 12px !important;
+	margin: 0 !important;
+	border-bottom: 1px solid var(--larabox-border-light) !important;
+}
+
+p.tabs a,
+#menu .links a {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 5px 8px !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	border-radius: var(--larabox-radius) !important;
+	background: var(--larabox-cap) !important;
+	color: var(--larabox-fg) !important;
+	border: 1px solid var(--larabox-border-light) !important;
+	text-decoration: none !important;
+	font-style: normal !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	transition: all 0.12s ease !important;
+}
+
+p.tabs a:hover,
+#menu .links a:hover {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	transform: none !important;
+}
+
+/* ─── Sidebar Tables List (Table Name on Left, Select on Right) ───────── */
+#tables {
+	order: 5 !important;
+	flex: 1 1 auto !important;
+	overflow-y: auto !important;
+	overflow-x: hidden;
+	padding: 6px 8px;
+	margin: 0;
+	list-style: none;
+	scrollbar-width: thin;
+	scrollbar-color: var(--larabox-border) transparent;
+	border-bottom: 1px solid var(--larabox-border-light);
+}
+
+#tables li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 2px 4px;
+	margin: 1px 0;
+	font-size: 12px;
+	border-radius: var(--larabox-radius);
+	transition: background 0.12s ease;
+}
+
+#tables li:hover {
+	background: var(--larabox-row-hover);
+}
+
+#tables li a:not(.select) {
+	order: 1;
+	/* Table name on the LEFT */
+	flex: 1;
+	color: var(--larabox-fg) !important;
+	background: transparent !important;
+	text-decoration: none;
+	font-style: normal !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-weight: 500;
+	padding: 2px 4px;
+}
+
+#tables li a:not(.select):hover {
+	color: var(--larabox-link-hover) !important;
+	text-decoration: none;
+}
+
+#tables a.select {
+	order: 2;
+	/* Select pill on the RIGHT */
+	margin-left: auto;
+	padding: 1px 6px;
+	font-size: 10px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	color: var(--larabox-muted) !important;
+	background: var(--larabox-cap) !important;
+	border: 1px solid var(--larabox-border-light) !important;
+	border-radius: var(--larabox-radius);
+	text-decoration: none;
+	font-style: normal !important;
+	line-height: 1.35;
+	transition: all 0.12s ease;
+}
+
+#tables a.select:hover {
+	background: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	border-color: var(--larabox-accent) !important;
+	text-decoration: none;
+}
+
+/* ─── Card Headers ────────────────────────────────────────────────────── */
+h2,
+.rtl h2,
+#content h2 {
+	font-size: 16px;
+	font-weight: 700;
+	color: #ffffff;
+	padding: 8px 16px;
+	border-radius: var(--larabox-radius);
+	background: var(--larabox-cap) !important;
+	display: inline-block;
+	border-left: 3px solid var(--larabox-accent);
+	border-bottom: 1px solid var(--larabox-border);
+	margin: 0 0 16px 0;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── Content Primary Subnav Tabs (Select data, Show structure, Alter table, New item) ─── */
+#content>p.links,
+#content>.links {
+	display: flex !important;
+	flex-wrap: wrap !important;
+	align-items: center !important;
+	gap: 8px !important;
+	margin: 12px 0 16px !important;
+	padding: 0 !important;
+	background: transparent !important;
+	border: none !important;
+}
+
+#content>p.links a,
+#content>.links a {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	padding: 4px 14px !important;
+	height: 28px !important;
+	background: #33384a !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	color: #ffffff !important;
+	font-size: 11.5px !important;
+	font-weight: 600 !important;
+	text-decoration: none !important;
+	cursor: pointer !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+	transition: all 0.15s ease !important;
+}
+
+#content>p.links a:hover,
+#content>.links a:hover {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3) !important;
+	text-decoration: none !important;
+}
+
+#content>p.links a.active,
+#content>.links a.active {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35) !important;
+}
+
+/* Documentation help link (?) */
+#content>p.links a[href*="table/"],
+#content>p.links a[href*="mariadb.com"],
+#content>p.links a[href*="mysql.com"],
+#content>p.links a[target="_blank"] {
+	width: 28px !important;
+	padding: 0 !important;
+	border-radius: 50% !important;
+	font-weight: 700 !important;
+	color: var(--larabox-muted) !important;
+	margin-left: 4px !important;
+}
+
+h3 {
+	font-size: 13.5px;
+	font-weight: 600;
+	color: var(--larabox-fg);
+	margin: 16px 0 10px;
+}
+
+/* ─── High-Contrast Data Grid (Unified Table Layout) ──────────────────── */
+/* Scrollable container for tables - wide data tables scroll smoothly within their card */
+.scrollable {
+	display: block !important;
+	max-width: 100% !important;
+	overflow-x: auto !important;
+	box-sizing: border-box !important;
+	margin: 14px 0 !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	background: var(--larabox-surface) !important;
+	box-shadow: var(--larabox-shadow) !important;
+}
+
+table {
+	width: 100%;
+	min-width: 100%;
+	border-collapse: collapse !important;
+	background: var(--larabox-surface) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius);
+	margin: 12px 0 16px;
+	font-size: 12px;
+	table-layout: auto !important;
+}
+
+/* Inside .scrollable, table seamlessly fills card without double borders */
+.scrollable>table {
+	margin: 0 !important;
+	border: none !important;
+	border-radius: 0 !important;
+	display: table !important;
+	width: 100% !important;
+}
+
+/* Ensure single unified table formatting context so thead th and tbody td widths match 1:1 */
+table>thead,
+.scrollable>table>thead {
+	display: table-header-group !important;
+}
+
+table>tbody,
+.scrollable>table>tbody {
+	display: table-row-group !important;
+}
+
+table tr,
+.scrollable>table tr {
+	display: table-row !important;
+}
+
+/* Ensure nowrap tables keep cells on single lines so wide tables expand naturally */
+table.nowrap th,
+table.nowrap td,
+.nowrap th,
+.nowrap td {
+	white-space: nowrap !important;
+}
+
+th,
+td,
+.column {
+	padding: 5px 8px;
+	border: 1px solid var(--larabox-border) !important;
+	vertical-align: middle;
+	line-height: 1.4;
+	background: var(--larabox-surface);
+	color: var(--larabox-fg);
+}
+
+/* Headers with Bold High-Contrast Text */
+thead th,
+thead td {
+	position: static !important;
+	background: var(--larabox-cap) !important;
+	color: #ffffff !important;
+	font-weight: 600;
+	font-size: 11px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	border: 1px solid var(--larabox-border) !important;
+	border-bottom: 2px solid var(--larabox-accent) !important;
+	white-space: nowrap;
+}
+
+thead th a,
+thead td a {
+	color: #ffffff !important;
+	font-weight: 600;
+}
+
+/* Alternating Row Tint - OVERRIDE ADMINER'S .odds WHITE INJECTION */
+tbody tr td,
+tbody tr th {
+	background: var(--larabox-surface);
+	color: var(--larabox-fg);
+}
+
+.odds tbody tr:nth-child(2n),
+.odds tbody tr:nth-child(2n) td,
+.odds tbody tr:nth-child(2n) th,
+tbody tr:nth-child(even) td,
+tbody tr:nth-child(even) th {
+	background: var(--larabox-cap) !important;
+}
+
+/* Checkbox cell hover fix */
+td.hover,
+th.hover {
+	background: inherit !important;
+}
+
+/* Row Hover */
+tbody tr:hover td,
+tbody tr:hover th {
+	background: var(--larabox-row-hover) !important;
+}
+
+/* Row Selection Highlight */
+.js .checkable tbody .checked td,
+.js .checkable tbody .checked th,
+.js .checkable tbody tr.checked td,
+.js .checkable tbody tr.checked th {
+	background: var(--larabox-row-checked) !important;
+	color: #ffffff !important;
+	border-color: rgba(59, 130, 246, 0.4) !important;
+}
+
+.js .checkable tbody .checked:hover td {
+	background: #254884 !important;
+}
+
+.js .checkable tbody .checked td:first-child {
+	border-left: 3px solid var(--larabox-accent) !important;
+}
+
+.js .checkable tbody .checked a {
+	color: #93c5fd !important;
+	font-weight: 600;
+}
+
+/* Monospace Values */
+td,
+code,
+pre,
+.jush-sql,
+.sqlarea,
+th>code {
+	font-family: var(--font-mono);
+}
+
+/* ─── Eliminate Bottom White Glow (Footer & Batch Actions) ───────────── */
+.footer,
+.footer>div,
+.footer fieldset {
+	background: transparent !important;
+	box-shadow: none !important;
+	border-color: var(--larabox-border) !important;
+	color: var(--larabox-fg);
+}
+
+.footer {
+	margin-top: 16px;
+	padding: 10px 0;
+	border-top: 1px solid var(--larabox-border-light);
+	color: var(--larabox-muted);
+	font-size: 11.5px;
+}
+
+/* ─── Form Controls & Login Card ──────────────────────────────────────── */
+table.layout {
+	width: auto;
+	min-width: 440px;
+	max-width: 580px;
+	background: var(--larabox-cap) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius-lg) !important;
+	padding: 18px 22px;
+	box-shadow: var(--larabox-shadow) !important;
+	margin: 16px 0 20px;
+	border-collapse: separate !important;
+}
+
+table.layout th {
+	background: transparent !important;
+	color: var(--larabox-muted) !important;
+	font-size: 12.5px !important;
+	font-weight: 600 !important;
+	text-align: right !important;
+	padding: 8px 14px !important;
+	border: none !important;
+	width: 120px !important;
+	vertical-align: middle !important;
+}
+
+table.layout td {
+	background: transparent !important;
+	padding: 8px 14px !important;
+	border: none !important;
+	vertical-align: middle !important;
+}
+
+table.layout tbody tr:hover td,
+table.layout tbody tr:hover th,
+table.layout tr:hover td,
+table.layout tr:hover th {
+	background: transparent !important;
+}
+
+input,
+select,
+textarea {
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	padding: .35rem .6rem;
+	background: var(--larabox-cap) !important;
+	color: var(--larabox-fg) !important;
+	font-size: 12px;
+	outline: none !important;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+	border-color: var(--larabox-muted) !important;
+	outline: none !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+	border-color: var(--larabox-accent) !important;
+	outline: none !important;
+	box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25) !important;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+	border: 0;
+	padding: 0;
+	background: transparent !important;
+}
+
+/* Buttons */
+input[type="submit"],
+input[type="button"],
+button:not(.icon):not(.link) {
+	padding: .35rem .85rem;
+	border: 1px solid var(--larabox-border);
+	background: #33384a !important;
+	color: #ffffff !important;
+	border-radius: var(--larabox-radius);
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 12px;
+	transition: all 0.15s ease;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button:not(.icon):not(.link):hover {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	transform: translateY(-1px);
+}
+
+input.default,
+input[type="submit"][value="Login"],
+input[type="submit"][value="Execute"] {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+}
+
+input.default:hover,
+input[type="submit"][value="Login"]:hover,
+input[type="submit"][value="Execute"]:hover {
+	background: var(--larabox-accent-hover) !important;
+}
+
+/* Fieldset & Query Builder Controls */
+fieldset {
+	border: 1px solid var(--larabox-border-light);
+	border-radius: var(--larabox-radius);
+	background: var(--larabox-cap);
+	padding: 8px 14px;
+}
+
+/* Collapsed query builder panels (Select, Search, Sort) - eliminate empty hollow boxes */
+fieldset:has(> .hidden),
+fieldset:has(> div.hidden) {
+	padding: 0 !important;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	margin: 0 4px 0 0 !important;
+	display: inline-block !important;
+	vertical-align: top !important;
+}
+
+fieldset:has(> .hidden) legend,
+fieldset:has(> div.hidden) legend {
+	margin: 0 !important;
+	padding: 0 !important;
+	display: inline-block !important;
+}
+
+/* Style collapsible fieldset legend links as real toggle buttons */
+legend a,
+legend a.toggle {
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 5px !important;
+	padding: 5px 12px !important;
+	background: var(--larabox-surface) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	color: var(--larabox-fg) !important;
+	font-size: 11.5px !important;
+	font-weight: 600 !important;
+	text-decoration: none !important;
+	cursor: pointer !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+	transition: all 0.15s ease !important;
+}
+
+legend a:hover,
+legend a.toggle:hover {
+	background: var(--larabox-row-hover) !important;
+	border-color: var(--larabox-accent) !important;
+	color: var(--larabox-link-hover) !important;
+}
+
+/* Expanded state: active toggle button header */
+fieldset:not(:has(> .hidden))>legend a,
+fieldset:not(:has(> div.hidden))>legend a {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+}
+
+/* Expanded state: full clean card container */
+fieldset:not(:has(> .hidden)):has(legend a),
+fieldset:not(:has(> div.hidden)):has(legend a) {
+	display: block !important;
+	margin: 10px 0 !important;
+	padding: 12px 16px !important;
+	background: var(--larabox-cap) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+}
+
+/* Compact inline cards for non-collapsible fieldsets (Limit, Text length, Action) */
+fieldset:not(:has(legend a)):not(.footer fieldset) {
+	display: inline-flex !important;
+	align-items: center !important;
+	vertical-align: top !important;
+	margin: 0 4px !important;
+	padding: 4px 10px !important;
+	background: var(--larabox-cap) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+}
+
+fieldset:not(:has(legend a)):not(.footer fieldset) legend {
+	font-size: 10px !important;
+	font-weight: 700 !important;
+	text-transform: uppercase !important;
+	letter-spacing: 0.04em !important;
+	color: var(--larabox-muted) !important;
+	padding: 0 4px !important;
+}
+
+.footer fieldset {
+	position: relative;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	background: var(--larabox-cap) !important;
+	padding: 8px 14px !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 10px !important;
+	box-shadow: none !important;
+}
+
+.footer fieldset legend {
+	color: var(--larabox-muted) !important;
+	font-size: 11px !important;
+	font-weight: 600 !important;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	padding: 0 4px !important;
+	background: transparent !important;
+	display: inline-flex !important;
+	align-items: center !important;
+}
+
+/* Inline selection counter badges inside fieldset legends (e.g. SELECTED (0)) */
+legend #selected,
+legend #selected2,
+legend #selected3,
+#selected,
+#selected2,
+#selected3 {
+	position: static !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	margin: 0 0 0 6px !important;
+	padding: 1px 7px !important;
+	background: var(--larabox-surface) !important;
+	color: #93c5fd !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: 12px !important;
+	font-size: 11px !important;
+	font-weight: 700 !important;
+	line-height: 1.4 !important;
+	vertical-align: middle !important;
+	box-shadow: none !important;
+}
+
+legend #selected:empty,
+legend #selected2:empty,
+legend #selected3:empty,
+#selected:empty,
+#selected2:empty,
+#selected3:empty {
+	display: none !important;
+}
+
+/* Hover tooltip over bulk buttons (e.g. "OPTIMIZE TABLE", "TRUNCATE TABLE") */
+#help {
+	position: absolute !important;
+	margin: 0 !important;
+	margin-top: -6px !important;
+	background: #1e2230 !important;
+	color: #93c5fd !important;
+	border: 1px solid var(--larabox-accent) !important;
+	border-radius: var(--larabox-radius) !important;
+	padding: 4px 10px !important;
+	font-family: var(--font-sans) !important;
+	font-size: 11px !important;
+	font-weight: 700 !important;
+	letter-spacing: 0.04em !important;
+	text-transform: uppercase !important;
+	text-decoration: none !important;
+	white-space: nowrap !important;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(59, 130, 246, 0.2) !important;
+	z-index: 1000 !important;
+	pointer-events: none !important;
+}
+
+/* Force all child elements (<u>, <a>, <span>, <code>) to be bright blue, non-underlined, and visible */
+#help *,
+#help u,
+#help a,
+#help code,
+#help span {
+	color: #93c5fd !important;
+	text-decoration: none !important;
+	font-family: var(--font-sans) !important;
+	font-weight: 700 !important;
+	font-size: 11px !important;
+	letter-spacing: 0.04em !important;
+	background: transparent !important;
+	border: none !important;
+}
+
+#help:empty,
+#help.hidden {
+	display: none !important;
+}
+
+.footer fieldset input[type="submit"] {
+	background: #33384a !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	color: #ffffff !important;
+	padding: 4px 14px !important;
+	font-size: 11.5px !important;
+	font-weight: 600 !important;
+	cursor: pointer;
+	transition: all 0.15s ease;
+}
+
+.footer fieldset input[type="submit"]:hover {
+	background: var(--larabox-accent) !important;
+	border-color: var(--larabox-accent) !important;
+	color: #ffffff !important;
+	box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3) !important;
+	transform: none !important;
+}
+
+legend {
+	color: var(--larabox-muted);
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	padding: 0 4px;
+}
+
+/* Alerts */
+.error,
+#menu p.error {
+	border: 1px solid var(--larabox-alert-error);
+	background: var(--larabox-alert-error-bg) !important;
+	color: #fca5a5;
+	border-radius: var(--larabox-radius);
+	padding: 8px 12px;
+	margin-bottom: 12px;
+}
+
+.message,
+#menu p.message {
+	border: 1px solid var(--larabox-alert-success);
+	background: var(--larabox-alert-success-bg) !important;
+	color: #6ee7b7;
+	border-radius: var(--larabox-radius);
+	padding: 8px 12px;
+	margin-bottom: 12px;
+}
+
+/* ─── SQL Editor & JUSH Syntax Highlighting ───────────────────────────── */
+[contenteditable].jush,
+.sqlarea {
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius);
+	background: var(--larabox-cap) !important;
+	color: #f1f5f9 !important;
+	padding: 10px 12px;
+	font-family: var(--font-mono);
+	font-size: 12.5px;
+	line-height: 1.5;
+}
+
+/* Reset nested code tokens so they never produce concentric nested boxes */
+code.jush code,
+code.jush-sql code,
+.jush code {
+	border: none !important;
+	background: transparent !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-shadow: none !important;
+	display: inline !important;
+}
+
+/* Table cells (check constraints like json_valid, defaults): clean inline code */
+td code,
+td .jush,
+td code.jush,
+td code.jush-sql {
+	display: inline !important;
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-shadow: none !important;
+	font-size: 12px !important;
+}
+
+/* Standalone SQL query display card - exactly ONE clean card */
+p.sql,
+p:not(.links):not(#logout):not(#breadcrumb)>code.jush:first-child,
+p:not(.links):not(#logout):not(#breadcrumb)>code.jush-sql:first-child,
+pre.jush {
+	display: inline-block !important;
+	background: #181a24 !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-left: 3.5px solid var(--larabox-accent) !important;
+	border-radius: var(--larabox-radius) !important;
+	padding: 6px 12px !important;
+	color: #e2e8f0 !important;
+	font-family: var(--font-mono) !important;
+	font-size: 12.5px !important;
+	line-height: 1.55 !important;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Neutralize any code inside p.sql so p.sql is the only framed box */
+p.sql>code,
+p.sql>code.jush,
+p.sql>code.jush-sql {
+	display: inline !important;
+	background: transparent !important;
+	border: none !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-shadow: none !important;
+}
+
+/* ─── JUSH Syntax Highlighter Dark Theme Overrides ───────────────────── */
+.jush,
+code.jush,
+code.jush-sql,
+pre.jush {
+	--text-color: #f1f5f9 !important;
+	--bg-color: transparent !important;
+	--border-color: var(--larabox-border) !important;
+	--php-color: #93c5fd !important;
+	--string-color: #4ade80 !important;
+	--string-plain-color: #86efac !important;
+	--keyword-color: #60a5fa !important;
+	/* Sky blue for SELECT, FROM, WHERE, LIMIT */
+	--identifier-color: #fbbf24 !important;
+	/* Amber for `activity_log`, column names */
+	--value-color: #c084fc !important;
+	/* Purple for values */
+	--number-color: #38bdf8 !important;
+	/* Cyan for numbers */
+	--attribute-color: #93c5fd !important;
+}
+
+.jush a,
+.jush-sql a,
+.jush-kw,
+.jush-keyword,
+.jush-help,
+code.jush-sql a.jush-help,
+.jush a.jush-help {
+	color: #60a5fa !important;
+	/* Vibrant sky blue */
+	font-weight: 600 !important;
+	text-decoration: none !important;
+}
+
+.jush-help:hover,
+code.jush-sql a.jush-help:hover,
+.jush a.jush-help:hover,
+.jush a:hover {
+	color: #93c5fd !important;
+	text-decoration: underline !important;
+}
+
+/* Identifiers: Tables, Columns, Schemas (`activity_log`, `servers`, etc.) */
+.jush-custom,
+.jush-bac,
+code.jush-sql a.jush-custom,
+.jush a.jush-custom {
+	color: #fbbf24 !important;
+	/* Warm amber/gold - easily legible and distinct */
+	font-weight: 500 !important;
+	text-decoration: none !important;
+}
+
+.jush-custom:hover,
+code.jush-sql a.jush-custom:hover,
+.jush a.jush-custom:hover {
+	color: #fde68a !important;
+	text-decoration: underline !important;
+}
+
+/* Strings / Quoted Literals ('value', "string") */
+.jush-str,
+.jush-quoted,
+.jush-text,
+.jush-apo,
+.jush-quo,
+.jush-sql_apo,
+.jush-sql_quo,
+code.jush-sql .jush-str,
+.jush .jush-str {
+	color: #4ade80 !important;
+	/* Fresh light green */
+	font-weight: 400 !important;
+}
+
+/* Numbers & Numeric Constants (50, 100, 0.001) */
+.jush-num,
+.jush-val,
+code.jush-sql .jush-num,
+.jush .jush-num,
+code.jush-sql .jush-val,
+.jush .jush-val {
+	color: #38bdf8 !important;
+	/* Crisp cyan/teal */
+	font-weight: 600 !important;
+}
+
+/* SQL Functions (COUNT, NOW, CONCAT, COALESCE, etc.) */
+.jush-fun,
+code.jush-sql .jush-fun,
+.jush .jush-fun {
+	color: #c084fc !important;
+	/* Soft purple */
+	font-weight: 600 !important;
+}
+
+/* SQL Operators & Punctuations (+, -, =, *, `, ,) */
+.jush-op,
+code.jush-sql .jush-op,
+.jush .jush-op {
+	color: #f8fafc !important;
+	/* Crisp bright white for * and operators */
+	font-weight: 600 !important;
+}
+
+/* SQL Comments (-- comment, /* comment * /) */
+.jush-com,
+.jush-comment,
+code.jush-sql .jush-com,
+.jush .jush-com {
+	color: #64748b !important;
+	font-style: italic !important;
+}
+
+/* Query execution time & Edit link beside the code box */
+p code.jush-sql+a,
+code.jush-sql+a {
+	margin-left: 8px !important;
+	font-size: 12px !important;
+	font-weight: 600 !important;
+	color: var(--larabox-link) !important;
+}
+
+p code.jush-sql+a:hover,
+code.jush-sql+a:hover {
+	color: var(--larabox-link-hover) !important;
+}
+
+/* ─── Schema Page: Text Visibility + Box Backgrounds ────────────────── */
+#schema,
+#schema table,
+#schema td,
+#schema th,
+#schema a {
+	color: var(--larabox-fg) !important;
+}
+
+#schema a {
+	color: var(--larabox-link) !important;
+}
+
+#schema a:hover {
+	color: var(--larabox-link-hover) !important;
+}
+
+/* Schema table boxes — slightly lighter than page bg */
+#schema div.table {
+	background: var(--larabox-surface-secondary) !important;
+	border: 1px solid var(--larabox-border) !important;
+	border-radius: var(--larabox-radius) !important;
+	padding: 5px !important;
+}
+
+.size {
+	width: 15ex !important;
+}
